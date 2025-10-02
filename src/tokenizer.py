@@ -14,6 +14,7 @@ class Tokenizer:
     Преобразует входную строку в список токенов
     """
     def __init__(self) -> None:
+        # Собирает части регулярного выражения в кучу для последующего объединения
         parts = [
             f"(?P<NUMBER>{src.constants.NUMBER_RE})",
             f"(?P<OPERATIONS>{src.constants.OPERATIONS_RE})",
