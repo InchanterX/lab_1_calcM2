@@ -1,10 +1,10 @@
 from typing import List
 from src.tokenizer import Token
-from constants import PRECEDENCE, RIGHT_ASSOC
+from src.constants import PRECEDENCE, RIGHT_ASSOC
 
 class Parser:
     def __init__(self, tokens: List[Token]):
-        self.token = tokens
+        self.tokens = tokens
 
     def convert_to_rpm(self) -> List[Token]:
         '''
@@ -14,12 +14,12 @@ class Parser:
         stack: List[Token] = []
 
         for token in self.tokens:
-            if token.kind == "NUMBER":
+            if token.type == "NUMBER":
                 output.append(token)
-            elif token.kind == "OPERATIONS":
+            elif token.type == "OPERATIONS":
                 while (
                     stack != []
-                    and stack[-1].kind == "OPERATIONS"
+                    and stack[-1].type == "OPERATIONS"
                     and (
                         (stack[-1].value not in RIGHT_ASSOC and PRECEDENCE[stack[-1].value] >= PRECEDENCE[token.value])
                         or (stack[-1].value in RIGHT_ASSOC and PRECEDENCE[stack[-1].value] > PRECEDENCE[token.value])
@@ -28,11 +28,11 @@ class Parser:
                     output.append(stack.pop())
                 stack.append(token)
 
-            elif token.kind == "LBRAKET":
+            elif token.type == "LBRACKET":
                 stack.append(token)
 
-            elif token.kind == "RBRACKET":
-                while stack != [] and stack[-1].kind != 'LBRECKET':
+            elif token.type == "RBRACKET":
+                while stack != [] and stack[-1].type != 'LBRACKET':
                     output.append(stack.pop())
                 if stack == []:
                     raise SyntaxError('Лишняя закрывающаяся скобка!')
@@ -40,7 +40,7 @@ class Parser:
                     stack.pop()
 
         while stack!=[]:
-            if stack[-1].kind in ("LBRAKET", "RBRACKET"):
+            if stack[-1].type in ("LBRACKET", "RBRACKET"):
                 raise SyntaxError("Выражение содержит лишние скобки")
             else:
                 output.append(stack.pop())
