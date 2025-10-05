@@ -12,11 +12,21 @@ class Parser:
         '''
         output: List[Token] = []
         stack: List[Token] = []
+        previous_token=None
+        negate_next_number=False
 
         for token in self.tokens:
             if token.type == "NUMBER":
+                if negate_next_number==True:
+                    token.value=-token.value
+                    negate_next_number=False
                 output.append(token)
             elif token.type == "OPERATIONS":
+                if token.value=="+" or token.value == "-":
+                    if previous_token==None or previous_token.type == "OPERATIONS" or previous_token.type == "LBRACKET":
+                        if token.value=="-":
+                            negate_next_number=True
+                        continue
                 while (
                     stack != []
                     and stack[-1].type == "OPERATIONS"
@@ -38,6 +48,8 @@ class Parser:
                     raise SyntaxError('Лишняя закрывающаяся скобка!')
                 else:
                     stack.pop()
+
+            previous_token = token
 
         while stack!=[]:
             if stack[-1].type in ("LBRACKET", "RBRACKET"):

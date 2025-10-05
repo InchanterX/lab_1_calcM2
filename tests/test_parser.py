@@ -75,6 +75,27 @@ def test_floats():
 
     assert values == [15.2, 2, "+", 3.3, "**", 2.0001, 3, "+", "*"]
 
+def test_unary_operations():
+    expression = "-15.2 + (-5)**+2 +-2"
+    tokens = Tokenizer().tokenize(expression)
+    rpn = Parser(tokens).convert_to_rpm()
+    values = [token.value for token in rpn]
+
+    # Дополнительный вывод
+    print(f"\nПреобразование в польскую запись выражения: {expression!r}")
+    for num, token in enumerate(tokens):
+        print(f"Токен {num}: {token.type} = {token.value} (позиция: {token.pos})")
+    print(f"Итоговое выражение: {values}")
+
+    assert values == [-15.2, -5, 2, "**", "+", -2, "+"]
+
+def test_extra_operations():
+    expression = "(15.2 + 5"
+    tokens = Tokenizer().tokenize(expression)
+    parser=Parser(tokens)
+    with pytest.raises(SyntaxError):
+        parser.convert_to_rpm()
+
 def test_unclosed_brackets():
     expression = "(15.2 + 5"
     tokens = Tokenizer().tokenize(expression)
