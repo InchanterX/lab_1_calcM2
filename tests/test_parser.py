@@ -75,4 +75,16 @@ def test_floats():
 
     assert values == [15.2, 2, "+", 3.3, "**", 2.0001, 3, "+", "*"]
 
-# Нужно написать тесты для ошибок с не закрытой скобкой, с лишними скобками
+def test_unclosed_brackets():
+    expression = "(15.2 + 5"
+    tokens = Tokenizer().tokenize(expression)
+    parser=Parser(tokens)
+    with pytest.raises(SyntaxError):
+        parser.convert_to_rpm()
+
+def test_extra_brackets():
+    expression = "(15.2 + 5))"
+    tokens = Tokenizer().tokenize(expression)
+    parser=Parser(tokens)
+    with pytest.raises(SyntaxError):
+        parser.convert_to_rpm()
