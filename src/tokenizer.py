@@ -30,6 +30,7 @@ class Tokenizer:
         Токенизирует выражение в список токенов.
         Возвращаемая последовательность не отмечает унарность, эта задача возложена на парсер.
         """
+        expr=expr.replace(',','.')
         tokens: List[Token] = []
         pos = 0
         for m in self.master_re.finditer(expr):

@@ -27,6 +27,10 @@ class Parser:
                         if token.value=="-":
                             negate_next_number=True
                         continue
+
+                if previous_token is None or previous_token.type == "OPERATIONS" or previous_token.type == "LBRACKET":
+                    raise SyntaxError(f"Лишняя операция {token.value} на позиции {token.pos}!")
+
                 while (
                     stack != []
                     and stack[-1].type == "OPERATIONS"
@@ -45,15 +49,21 @@ class Parser:
                 while stack != [] and stack[-1].type != 'LBRACKET':
                     output.append(stack.pop())
                 if stack == []:
-                    raise SyntaxError('Лишняя закрывающаяся скобка!')
+                    raise SyntaxError("Лишняя закрывающаяся скобка!")
                 else:
                     stack.pop()
 
             previous_token = token
 
+        if negate_next_number == True:
+            raise SyntaxError("Выражение не может заканчиваться унарным оператором!")
+
+        if previous_token is not None and previous_token.type == "OPERATIONS":
+            raise SyntaxError(f"Выражение не может заканчиваться оператором {previous_token.value}!")
+
         while stack!=[]:
             if stack[-1].type in ("LBRACKET", "RBRACKET"):
-                raise SyntaxError("Выражение содержит лишние скобки")
+                raise SyntaxError("Выражение содержит лишние скобки!")
             else:
                 output.append(stack.pop())
 

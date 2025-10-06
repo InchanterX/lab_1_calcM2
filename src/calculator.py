@@ -45,8 +45,8 @@ class Calculator:
                     stack.append(first_number//second_number)
                 elif token.value == "**":
                     stack.append(first_number**second_number)
-                else:
-                    raise SyntaxError(f"Непредвиденный токен: {token}!")
+                # else:
+                #     raise SyntaxError(f"Непредвиденный токен: {token}!")
         if len(stack)!=1:
-            raise SyntaxError("Ошибка в выражении, остались не использованные значения")
+            raise SyntaxError("Ошибка в выражении, остались не использованные значения!")
         return stack[0]
