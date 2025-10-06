@@ -38,10 +38,23 @@ def test_expressions_with_brackets():
     result=Calculator(rpn).count_rpn()
     assert result == 19.0
 
-# Нужно доделать тест для унарных операций
-# def test_unary_numbers():
-#     expression = "(-15 +   3) * 4 //  2**2 + 1"
-#     tokens= Tokenizer().tokenize(expression)
-#     rpn = Parser(tokens).convert_to_rpm()
-#     result=Calculator(rpn).count_rpn()
-#     assert result == 19.0
+def test_unary_numbers():
+    expression = "(-15 +   3) * 4 //  2.1**2 +- 1"
+    tokens= Tokenizer().tokenize(expression)
+    rpn = Parser(tokens).convert_to_rpm()
+    result=Calculator(rpn).count_rpn()
+    assert result == -12.0
+
+def test_float_numbers():
+    expression = "3,14 / 2.13"
+    tokens= Tokenizer().tokenize(expression)
+    rpn = Parser(tokens).convert_to_rpm()
+    result=Calculator(rpn).count_rpn()
+    assert result == 1.4741784037558687
+
+def test_float_numbers():
+    expression = "3,14 / 2.13"
+    tokens= Tokenizer().tokenize(expression)
+    rpn = Parser(tokens).convert_to_rpm()
+    result=Calculator(rpn).count_rpn()
+    assert result == 1.4741784037558687
