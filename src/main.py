@@ -1,20 +1,20 @@
-from src.power import power_function
-from src.constants import SAMPLE_CONSTANT
-
+from src.facade import Facade
 
 def main() -> None:
-    """
-    Обязательнная составляющая программ, которые сдаются. Является точкой входа в приложение
-    :return: Данная функция ничего не возвращает
-    """
+    print("Добро пожаловать в калькулятор сделанный в рамках лабораторной работы по заданию M2!")
+    print("Калькулятор поддерживает операции +, -, *, /, //, %, **, скобки унарные операции + и - (до 2-х подряд).")
 
-    target, degree = map(int, input("Введите два числа разделенные пробелом: ").split(" "))
+    while True:
+        expression = input("\nВведите выражение: ").strip()
+        if expression.lower() in ("exit", "quit", "выход", "выйти"):
+            print("Выход из программы.")
+            break
 
-    result = power_function(target=target, power=degree)
-
-    print(result)
-
-    print(SAMPLE_CONSTANT)
+        try:
+            result = Facade().calculate (expression)
+            print(f"Результат: {result}")
+        except Exception as e:
+            print(f"Ошибка: {e}")
 
 if __name__ == "__main__":
     main()
