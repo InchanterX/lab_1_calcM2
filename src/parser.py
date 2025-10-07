@@ -38,7 +38,7 @@ class Parser:
                         unary_operations_counter += 1
                         if unary_operations_counter > 2:
                             raise SyntaxError(
-                                f"Слишком много подряд-идущих унарных операций!")
+                                f"Слишком много подряд идущих унарных операций!")
                         if token.value == "-":
                             negate_next_number = not negate_next_number
                         continue

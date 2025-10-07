@@ -60,14 +60,6 @@ def test_float_numbers():
     assert result == 1.4741784037558687
 
 
-def test_float_numbers():
-    expression = "3,14 / 2.13"
-    tokens = Tokenizer().tokenize(expression)
-    rpn = Parser(tokens).convert_to_rpm()
-    result = Calculator(rpn).count_rpn()
-    assert result == 1.4741784037558687
-
-
 def test_zero_division_1():
     expression = "3,14 / 0"
     tokens = Tokenizer().tokenize(expression)

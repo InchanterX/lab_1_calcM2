@@ -22,7 +22,7 @@ class Calculator:
                 try:
                     second_number = stack.pop()
                     first_number = stack.pop()
-                except:
+                except IndexError:
                     raise SyntaxError(
                         "В заданном выражении не достаточно операндов!")
                 '''

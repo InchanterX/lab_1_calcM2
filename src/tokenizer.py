@@ -66,5 +66,4 @@ class Tokenizer:
             elif kind == "UNKNOWN":
                 raise SyntaxError(
                     f"Неизвестный токен {text!r} на позиции {start}")
-            pos = m.end()
         return tokens
