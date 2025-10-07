@@ -30,34 +30,44 @@ class Calculator:
                 Raise a error for attempts of zero division with /, // and %.
                 Raise a error for attempts of applying // or % to a float number.
                 '''
-                if token.value == "+":
-                    stack.append(first_number+second_number)
-                elif token.value == "-":
-                    stack.append(first_number-second_number)
-                elif token.value == "*":
-                    stack.append(first_number*second_number)
-                elif token.value == "/":
-                    if second_number == 0:
-                        raise ZeroDivisionError("Деление на ноль невозможно!")
-                    stack.append(first_number/second_number)
-                elif token.value == "%":
-                    if isinstance(first_number, float) or isinstance(second_number, float):
-                        raise TypeError(
-                            "Операция % не поддерживает операция с числами с плавающей точкой!")
-                    elif second_number == 0:
-                        raise ZeroDivisionError("Деление на ноль невозможно!")
-                    stack.append(first_number % second_number)
-                elif token.value == "//":
-                    if isinstance(first_number, float) or isinstance(second_number, float):
-                        raise TypeError(
-                            "Операция // не поддерживает операция с числами с плавающей точкой!")
-                    elif second_number == 0:
-                        raise ZeroDivisionError("Деление на ноль невозможно!")
-                    stack.append(first_number//second_number)
-                elif token.value == "**":
-                    stack.append(first_number**second_number)
-                else:
-                    raise SyntaxError(f"Непредвиденный токен: {token}!")
+                try:
+                    if token.value == "+":
+                        stack.append(first_number+second_number)
+                    elif token.value == "-":
+                        stack.append(first_number-second_number)
+                    elif token.value == "*":
+                        stack.append(first_number*second_number)
+                    elif token.value == "/":
+                        if second_number == 0:
+                            raise ZeroDivisionError(
+                                "Деление на ноль невозможно!")
+                        stack.append(first_number/second_number)
+                    elif token.value == "%":
+                        if isinstance(first_number, float) or isinstance(second_number, float):
+                            raise TypeError(
+                                "Операция % не поддерживает операция с числами с плавающей точкой!")
+                        elif second_number == 0:
+                            raise ZeroDivisionError(
+                                "Деление на ноль невозможно!")
+                        stack.append(first_number % second_number)
+                    elif token.value == "//":
+                        if isinstance(first_number, float) or isinstance(second_number, float):
+                            raise TypeError(
+                                "Операция // не поддерживает операция с числами с плавающей точкой!")
+                        elif second_number == 0:
+                            raise ZeroDivisionError(
+                                "Деление на ноль невозможно!")
+                        stack.append(first_number//second_number)
+                    elif token.value == "**":
+                        stack.append(first_number**second_number)
+                    else:
+                        raise SyntaxError(f"Непредвиденный токен: {token}!")
+                except OverflowError:
+                    raise OverflowError(
+                        "Результат слишком большой для вычисления!")
+                except ValueError:
+                    raise OverflowError(
+                        "Результат не может быть представлен числом!")
         # Return the result - one float number. If stack contains more than one element raise a error
         if len(stack) != 1:
             raise SyntaxError(
