@@ -14,6 +14,7 @@ class Parser:
         stack: List[Token] = []
         previous_token=None
         negate_next_number=False
+        unary_operations_counter=0
 
         for token in self.tokens:
             if token.type == "NUMBER":
@@ -21,12 +22,18 @@ class Parser:
                     token.value=-token.value
                     negate_next_number=False
                 output.append(token)
+                unary_operations_counter = 0
             elif token.type == "OPERATIONS":
                 if token.value=="+" or token.value == "-":
                     if previous_token==None or previous_token.type == "OPERATIONS" or previous_token.type == "LBRACKET":
+                        unary_operations_counter+=1
+                        if unary_operations_counter>2:
+                            raise SyntaxError(f"Слишком много подряд-идущих унарных операций!")
                         if token.value=="-":
-                            negate_next_number=True
+                            negate_next_number= not negate_next_number
                         continue
+                    else:
+                        unary_operations_counter = 0
 
                 if previous_token is None or previous_token.type == "OPERATIONS" or previous_token.type == "LBRACKET":
                     raise SyntaxError(f"Лишняя операция {token.value} на позиции {token.pos}!")
@@ -41,9 +48,11 @@ class Parser:
                 ):
                     output.append(stack.pop())
                 stack.append(token)
+                unary_operations_counter = 0
 
             elif token.type == "LBRACKET":
                 stack.append(token)
+                unary_operations_counter = 0
 
             elif token.type == "RBRACKET":
                 while stack != [] and stack[-1].type != 'LBRACKET':
@@ -52,6 +61,7 @@ class Parser:
                     raise SyntaxError("Лишняя закрывающаяся скобка!")
                 else:
                     stack.pop()
+                unary_operations_counter = 0
 
             previous_token = token
 
