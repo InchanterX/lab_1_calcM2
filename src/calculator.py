@@ -58,6 +58,7 @@ class Calculator:
                     stack.append(first_number**second_number)
                 else:
                     raise SyntaxError(f"Непредвиденный токен: {token}!")
+        # Return the result - one float number. If stack contains more than one element raise a error
         if len(stack) != 1:
             raise SyntaxError(
                 "Ошибка в выражении, остались не использованные значения!")
