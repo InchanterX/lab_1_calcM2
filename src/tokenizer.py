@@ -3,16 +3,19 @@ from dataclasses import dataclass
 from typing import List, Any
 import src.constants
 
+
 @dataclass
 class Token:
     type: str
     value: Any
     pos: int
 
+
 class Tokenizer:
     """
     Преобразует входную строку в список токенов
     """
+
     def __init__(self) -> None:
         # Собирает части регулярного выражения в кучу для последующего объединения
         parts = [
@@ -30,7 +33,7 @@ class Tokenizer:
         Токенизирует выражение в список токенов.
         Возвращаемая последовательность не отмечает унарность, эта задача возложена на парсер.
         """
-        expr=expr.replace(',','.')
+        expr = expr.replace(',', '.')
         tokens: List[Token] = []
         pos = 0
         for m in self.master_re.finditer(expr):
@@ -43,10 +46,11 @@ class Tokenizer:
                 value = int(text) if "." not in text else float(text)
                 tokens.append(Token("NUMBER", value, start))
             elif kind == "OPERATIONS":
-                tokens.append(Token("OPERATIONS",text,start))
+                tokens.append(Token("OPERATIONS", text, start))
             elif kind == "LBRACKET" or kind == "RBRACKET":
                 tokens.append(Token(kind, text, start))
             elif kind == "UNKNOWN":
-                raise SyntaxError(f"Неизвестный токен {text!r} на позиции {start}")
+                raise SyntaxError(
+                    f"Неизвестный токен {text!r} на позиции {start}")
             pos = m.end()
         return tokens
