@@ -7,9 +7,10 @@
     .
     ├── lab_calcM2
     │   ├── src/                               # Исходный код
-    │       ├── calculator.py
+    │       ├── __init__.py
+    |       ├── calculator.py
     │       ├── constants.py
-    │       ├── evaluate.py
+    │       ├── facade.py
     │       ├── main.py
     │       ├── parser.py
     │       ├── tokenizer.py
@@ -26,3 +27,7 @@
     │   ├── README.md                          # Описание проекта, с описанием файлов и с титульником о том,
                                                # что и какая задача
 </pre>
+
+# Assumptions
+1. White spaces are insignificant
+2. It is prohibited to place more than two unary operations in a row

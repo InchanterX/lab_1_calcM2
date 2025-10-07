@@ -5,6 +5,7 @@ from src.calculator import Calculator
 
 class Facade:
     '''
+    Gather all the parts of the calculator and unite them from simpler usage in the future
     '''
 
     def calculate(self, expression: str) -> float:

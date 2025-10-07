@@ -6,6 +6,12 @@ import src.constants
 
 @dataclass
 class Token:
+    '''
+    Class for token contains three parts
+    - type of the token
+    - value contained in token
+    - original position of token in the entered string
+    '''
     type: str
     value: Any
     pos: int
@@ -13,11 +19,16 @@ class Token:
 
 class Tokenizer:
     """
-    Преобразует входную строку в список токенов
+    Tokenize the entered string by creating a list of tokens
+    splitted by the regular expressions.
     """
 
+    # Define all needed variables
     def __init__(self) -> None:
-        # Собирает части регулярного выражения в кучу для последующего объединения
+        '''
+        Gather all the regular expressions and
+        merge all the tokens' regular expressions into one splitted by |
+        '''
         parts = [
             f"(?P<NUMBER>{src.constants.NUMBER_RE})",
             f"(?P<OPERATIONS>{src.constants.OPERATIONS_RE})",
@@ -30,8 +41,9 @@ class Tokenizer:
 
     def tokenize(self, expr: str) -> List[Token]:
         """
-        Токенизирует выражение в список токенов.
-        Возвращаемая последовательность не отмечает унарность, эта задача возложена на парсер.
+        Tokenize the expression into tokens.
+        Tokenized list separate the unary operations as basic operations.
+        They will be splitted letter.
         """
         expr = expr.replace(',', '.')
         tokens: List[Token] = []
@@ -40,6 +52,7 @@ class Tokenizer:
             kind = m.lastgroup
             text = m.group(0)
             start = m.start()
+            # Skip the spaces in the expression as insignificant
             if kind == "SPACE":
                 pass
             elif kind == "NUMBER":
@@ -49,6 +62,7 @@ class Tokenizer:
                 tokens.append(Token("OPERATIONS", text, start))
             elif kind == "LBRACKET" or kind == "RBRACKET":
                 tokens.append(Token(kind, text, start))
+            # Define all other symbols as unknown and raise an error
             elif kind == "UNKNOWN":
                 raise SyntaxError(
                     f"Неизвестный токен {text!r} на позиции {start}")
