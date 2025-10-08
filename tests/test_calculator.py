@@ -106,3 +106,11 @@ def test_extra_symbols():
     rpn = Parser(tokens).convert_to_rpm()
     with pytest.raises(SyntaxError, match="Ошибка в выражении, остались не использованные значения!"):
         Calculator(rpn).count_rpn()
+
+
+def test_too_long_numbers():
+    expression = "2**1000000"
+    tokens = Tokenizer().tokenize(expression)
+    rpn = Parser(tokens).convert_to_rpm()
+    with pytest.raises(OverflowError, match="Результат не может быть представлен числом!"):
+        Calculator(rpn).count_rpn()

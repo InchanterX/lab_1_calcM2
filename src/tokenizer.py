@@ -1,5 +1,6 @@
 import re
 from dataclasses import dataclass
+from typing import Any
 import src.constants
 
 
@@ -12,7 +13,7 @@ class Token:
     - original position of token in the entered string
     '''
     type: str
-    value: any
+    value: Any
     pos: int
 
 

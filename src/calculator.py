@@ -36,7 +36,15 @@ class Calculator:
                     elif token.value == "-":
                         stack.append(first_number-second_number)
                     elif token.value == "*":
-                        stack.append(first_number*second_number)
+                        try:
+                            result = first_number*second_number
+                            if len(str(result)) > 4300:
+                                raise ValueError(
+                                    "Результат выражения слишком велик!")
+                            stack.append(result)
+                        except OverflowError:
+                            raise ValueError(
+                                "Результат выражения слишком велик!")
                     elif token.value == "/":
                         if second_number == 0:
                             raise ZeroDivisionError(
@@ -59,7 +67,15 @@ class Calculator:
                                 "Деление на ноль невозможно!")
                         stack.append(first_number//second_number)
                     elif token.value == "**":
-                        stack.append(first_number**second_number)
+                        try:
+                            result = first_number**second_number
+                            if len(str(result)) > 4300:
+                                raise ValueError(
+                                    "Результат выражения слишком велик!")
+                            stack.append(result)
+                        except OverflowError:
+                            raise ValueError(
+                                "Результат выражения слишком велик!")
                     else:
                         raise SyntaxError(f"Непредвиденный токен: {token}!")
                 except OverflowError:
