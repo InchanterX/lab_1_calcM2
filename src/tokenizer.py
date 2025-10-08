@@ -1,6 +1,5 @@
 import re
 from dataclasses import dataclass
-from typing import List, Any
 import src.constants
 
 
@@ -13,7 +12,7 @@ class Token:
     - original position of token in the entered string
     '''
     type: str
-    value: Any
+    value: any
     pos: int
 
 
@@ -39,14 +38,14 @@ class Tokenizer:
         ]
         self.master_re = re.compile("|".join(parts))
 
-    def tokenize(self, expr: str) -> List[Token]:
+    def tokenize(self, expr: str) -> list[Token]:
         """
         Tokenize the expression into tokens.
         Tokenized list separate the unary operations as basic operations.
         They will be splitted letter.
         """
         expr = expr.replace(',', '.')
-        tokens: List[Token] = []
+        tokens: list[Token] = []
         pos = 0
         for m in self.master_re.finditer(expr):
             kind = m.lastgroup
