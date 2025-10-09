@@ -1,7 +1,7 @@
 [project]
-name = "labs"
-version = "0.1.0"
-description = "Add your description here"
+name = "Python_Lab_Calc_M2"
+version = "1.0.1"
+description = "Calculator that tokenizes user's input, convert it to the reversed polish notation and count the result for the expression if it is valid."
 requires-python = ">=3.12.2"
 dependencies = [
     "pytest>=8.4.2",
