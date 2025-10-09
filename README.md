@@ -39,6 +39,10 @@ Then you can run it from the project root with your terminal with this command:
 ```
 python -m src.main
 ```
+To activate tests use:
+```
+python -m pytest
+```
 
 ## Users input
 **Main** file contains users interface that appear in the terminal. Programme suggest to enter an expression. There is several options for the user here:
