@@ -24,7 +24,7 @@ class Parser:
         for token in self.tokens:
             # Append numbers to the output, negate them if needed
             if token.type == "NUMBER":
-                if negate_next_number == True:
+                if negate_next_number:
                     token.value = -token.value
                     negate_next_number = False
                 output.append(token)
@@ -34,11 +34,11 @@ class Parser:
                 # Separate the unary operations,
                 # make an exception if they are used wrongly
                 if token.value == "+" or token.value == "-":
-                    if previous_token == None or previous_token.type == "OPERATIONS" or previous_token.type == "LBRACKET":
+                    if previous_token is None or previous_token.type == "OPERATIONS" or previous_token.type == "LBRACKET":
                         unary_operations_counter += 1
                         if unary_operations_counter > 2:
                             raise SyntaxError(
-                                f"Слишком много подряд идущих унарных операций!")
+                                "Слишком много подряд идущих унарных операций!")
                         if token.value == "-":
                             negate_next_number = not negate_next_number
                         continue
@@ -81,7 +81,7 @@ class Parser:
 
             previous_token = token
 
-        if negate_next_number == True:
+        if negate_next_number:
             raise SyntaxError(
                 "Выражение не может заканчиваться унарным оператором!")
 

@@ -35,7 +35,7 @@ class Tokenizer:
             f"(?P<LBRACKET>{src.constants.LBRACKET_RE})",
             f"(?P<RBRACKET>{src.constants.RBRACKET_RE})",
             f"(?P<SPACE>{src.constants.SPACE_RE})",
-            f"(?P<UNKNOWN>.)",
+            "(?P<UNKNOWN>.)",
         ]
         self.master_re = re.compile("|".join(parts))
 
@@ -47,7 +47,6 @@ class Tokenizer:
         """
         expr = expr.replace(',', '.')
         tokens: list[Token] = []
-        pos = 0
         for m in self.master_re.finditer(expr):
             kind = m.lastgroup
             text = m.group(0)

@@ -1,7 +1,7 @@
 
 
 
-# Структура проекта
+# Project structure
 
  <pre>
     .
@@ -79,7 +79,7 @@ Facade gather all the classes in one for a simpler usage without need of rightin
 ---
 And here we are again in the main file with a result for our expression.
 
-# Киллер фича:
+# Killer feature:
 ```
 casino_on
 ```

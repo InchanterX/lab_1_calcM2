@@ -1,5 +1,5 @@
 import pytest
-from src.tokenizer import Tokenizer, Token
+from src.tokenizer import Tokenizer
 
 
 def test_number_and_operations():
@@ -38,7 +38,7 @@ def test_unknown():
     t = Tokenizer()
     expression = "2-a"
     with pytest.raises(SyntaxError, match="Неизвестный токен 'a' на позиции 2"):
-        tokens = t.tokenize(expression)
+        t.tokenize(expression)
 
 
 def test_potentially_incorrect_expression():
